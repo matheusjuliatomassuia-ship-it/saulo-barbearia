@@ -1,3 +1,4 @@
+import { supabase } from '../supabaseClient';
 import React from 'react';
 import {
   User,
@@ -59,12 +60,36 @@ export const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
     onChangePhone(masked);
   };
 
-  const handleSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (canSubmit && !isSubmitting) {
+const handleSubmitForm = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (canSubmit && !isSubmitting) {
+    try {
+      // Tenta registrar no Supabase
+      await supabase
+        .from('agendamentos')
+        .insert([
+          {
+            codigo: 'AG' + Math.floor(1000 + Math.random() * 9000),
+            cliente_nome: name || 'Cliente',
+            cliente_phone: phone || '',
+            servico: 'Corte / Barba',
+            profissional: 'Barbeiro',
+            data_agendamento: new Date().toISOString().split('T')[0],
+            horario: '12:00',
+            duracao_minutos: 30,
+            valor: 50,
+            observacao: notes || ''
+          }
+        ]);
+    } catch (err) {
+      console.error('Erro na integração com Supabase:', err);
+    } finally {
+      // Garante o prosseguimento para o WhatsApp/tela final mesmo se o banco falhar
       onSubmit(e);
     }
-  };
+  }
+};
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
