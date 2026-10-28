@@ -45,7 +45,34 @@ export default function App() {
 
   // Passo ativo: 1 - Serviço | 2 - Barbeiro | 3 - Data & Horário | 4 - Confirmação & WhatsApp
   const [activeStep, setActiveStep] = useState<number>(1);
+const [remoteBusy, setRemoteBusy] = useState<Appointment[] | null>(null);
 
+const loadBusySlots = async () => {
+  if (!supabase) return;
+  const fim = new Date();
+  fim.setDate(fim.getDate() + 60);
+  const { data, error } = await supabase.rpc('horarios_ocupados', {
+    p_inicio: toLocalIsoDate(new Date()),
+    p_fim: toLocalIsoDate(fim),
+  });
+  if (error || !data) return;
+  setRemoteBusy(
+    (data as { dia: string; hora: string }[]).map(
+      (r) =>
+        ({
+          id: `remote-${r.dia}-${r.hora}`,
+          date: r.dia,
+          time: r.hora,
+          barberId: BARBERS[0].id,
+          status: 'confirmado',
+        }) as unknown as Appointment
+    )
+  );
+};
+
+useEffect(() => {
+  if (activeStep === 3) loadBusySlots();
+}, [activeStep]);
   // Estado da reserva do cliente
   const [selectedService, setSelectedService] = useState<Service>(SERVICES[0]);
   const [selectedBarber, setSelectedBarber] = useState<Barber>(BARBERS[0]);
