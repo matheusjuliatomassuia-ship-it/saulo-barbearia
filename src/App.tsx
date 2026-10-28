@@ -86,7 +86,7 @@ useEffect(() => {
     return toLocalIsoDate(today);
   });
 
-  const [selectedTime, setSelectedTime] = useState<string>('15:00');
+  const [selectedTime, setSelectedTime] = useState<string>('');
   const [clientName, setClientName] = useState<string>('');
   const [clientPhone, setClientPhone] = useState<string>('');
   const [clientNotes, setClientNotes] = useState<string>('');
