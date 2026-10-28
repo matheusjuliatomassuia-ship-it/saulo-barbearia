@@ -62,35 +62,35 @@ export const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
   };
 
   const handleSubmitForm = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
+  if (!canSubmit || isSubmitting) return;
 
-    if (canSubmit && !isSubmitting) {
-      if (supabase) {
-        try {
-          await supabase
-            .from('agendamentos')
-            .insert([
-              {
-                codigo: 'AG' + Math.floor(1000 + Math.random() * 9000),
-                cliente_nome: name.trim() || 'Cliente',
-                cliente_phone: phone || '',
-                servico: selectedService ? selectedService.name : 'Serviço',
-                profissional: selectedBarber ? selectedBarber.name : 'Barbeiro',
-                data_agendamento: selectedDate || new Date().toISOString().split('T')[0],
-                horario: selectedTime || '',
-                duracao_minutos: selectedService ? selectedService.durationMinutes : 30,
-                valor: selectedService ? selectedService.price : 0,
-                observacao: notes ? notes.trim() : ''
-              }
-            ]);
-        } catch (err) {
-          console.warn('Erro ao salvar no Supabase (prosseguindo com WhatsApp):', err);
-        }
-      }
+  if (supabase) {
+    const { error } = await supabase.from('agendamentos').insert([
+      {
+        codigo: 'AG' + Math.floor(1000 + Math.random() * 9000),
+        cliente_nome: name.trim() || 'Cliente',
+        cliente_phone: phone || '',
+        servico: selectedService.name,
+        profissional: selectedBarber.name,
+        data_agendamento: selectedDate,
+        horario: selectedTime,
+        duracao_minutos: selectedService.durationMinutes,
+        valor: selectedService.price,
+        observacao: notes.trim(),
+      },
+    ]);
 
-      onSubmit(e);
+    if (error?.code === '23505') {
+      alert('Esse horário acabou de ser ocupado. Escolha outro horário.');
+      onBack();
+      return;
     }
-  };
+    if (error) console.warn('Erro ao salvar no Supabase (prosseguindo com WhatsApp):', error);
+  }
+
+  onSubmit(e);
+};
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
