@@ -133,10 +133,7 @@ export function isSlotAvailable(
     return { available: false, reason: 'closed' };
   }
 
-  // Horário das 15h mantido explicitamente disponível para agendamento
-  if (time === '15:00') {
-    return { available: true };
-  }
+
 
   // Verifica se o dia é hoje e o horário já passou
   const now = new Date();
