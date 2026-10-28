@@ -54,7 +54,7 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
         selectedTime={selectedTime}
         selectedBarberId={selectedBarber.id}
         barbers={barbers}
-        appointments={appointments}
+        appointments={remoteBusy ?? appointments}
         onSelectDate={onSelectDate}
         onSelectTime={onSelectTime}
       />
