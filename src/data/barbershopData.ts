@@ -1,17 +1,18 @@
 import { Barber, BarbershopInfo, Service, Appointment } from '../types';
 
 export const BARBERSHOP_INFO: BarbershopInfo = {
-  name: 'Saulo Barbearia',
+  name: 'Saulo Fernandes Barbearia',
   tagline: 'Cortes autênticos, toalha quente e tradição',
   phone: '5511918775816', // WhatsApp oficial do estabelecimento
   displayPhone: '+55 11 91877-5816',
-  address: 'Rua Augusta, 1420',
-  neighborhood: 'Consolação',
-  city: 'São Paulo - SP',
+  address: 'Rua São José, Nº170',
+  neighborhood: 'Criciúma',
+  city: 'Caieiras - SP',
   instagram: '@saulobarbearia',
   openingHours: 'Terça a Sábado: 09:00 às 20:00',
   rating: 4.9,
   reviewCount: 480,
+  logo: '/saulo_profile_logo.jpg',
 };
 
 export const SERVICES: Service[] = [
@@ -70,7 +71,7 @@ export const BARBERS: Barber[] = [
     name: 'Saulo',
     nickname: 'Master Barber',
     role: 'Barbeiro & Proprietário',
-    avatar: '/saulo_barber.jpg',
+    avatar: '/saulo_profile_logo.jpg',
     rating: 5.0,
     reviewCount: 480,
     specialties: ['Degradê Low / Mid / High', 'Barba Terapia com Toalha Quente', 'Cortes Clássicos & Visagismo'],

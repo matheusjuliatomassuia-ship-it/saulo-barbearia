@@ -17,6 +17,7 @@ import {
 import { Barber, Service } from '../types';
 import { formatFullDate } from '../utils/dateUtils';
 import { maskPhoneBR } from '../utils/whatsappUtils';
+import { BARBERSHOP_INFO } from '../data/barbershopData';
 
 interface ConfirmationStepProps {
   name: string;
@@ -60,36 +61,36 @@ export const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
     onChangePhone(masked);
   };
 
-const handleSubmitForm = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmitForm = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (canSubmit && !isSubmitting) {
-    try {
-      // Tenta registrar no Supabase
-      await supabase
-        .from('agendamentos')
-        .insert([
-          {
-            codigo: 'AG' + Math.floor(1000 + Math.random() * 9000),
-            cliente_nome: name || 'Cliente',
-            cliente_phone: phone || '',
-            servico: 'Corte / Barba',
-            profissional: 'Barbeiro',
-            data_agendamento: new Date().toISOString().split('T')[0],
-            horario: '12:00',
-            duracao_minutos: 30,
-            valor: 50,
-            observacao: notes || ''
-          }
-        ]);
-    } catch (err) {
-      console.error('Erro na integração com Supabase:', err);
-    } finally {
-      // Garante o prosseguimento para o WhatsApp/tela final mesmo se o banco falhar
+    if (canSubmit && !isSubmitting) {
+      if (supabase) {
+        try {
+          await supabase
+            .from('agendamentos')
+            .insert([
+              {
+                codigo: 'AG' + Math.floor(1000 + Math.random() * 9000),
+                cliente_nome: name.trim() || 'Cliente',
+                cliente_phone: phone || '',
+                servico: selectedService ? selectedService.name : 'Serviço',
+                profissional: selectedBarber ? selectedBarber.name : 'Barbeiro',
+                data_agendamento: selectedDate || new Date().toISOString().split('T')[0],
+                horario: selectedTime || '',
+                duracao_minutos: selectedService ? selectedService.durationMinutes : 30,
+                valor: selectedService ? selectedService.price : 0,
+                observacao: notes ? notes.trim() : ''
+              }
+            ]);
+        } catch (err) {
+          console.warn('Erro ao salvar no Supabase (prosseguindo com WhatsApp):', err);
+        }
+      }
+
       onSubmit(e);
     }
-  }
-};
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
@@ -115,7 +116,7 @@ const handleSubmitForm = async (e: React.FormEvent) => {
             <Sparkles className="w-4 h-4" />
             Resumo do Agendamento
           </h3>
-          <span className="text-xs text-neutral-400 font-mono">Saulo Barbearia</span>
+          <span className="text-xs text-neutral-400 font-mono">{BARBERSHOP_INFO.name}</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
@@ -265,7 +266,7 @@ const handleSubmitForm = async (e: React.FormEvent) => {
           <div className="leading-relaxed">
             <p className="font-bold text-emerald-200">Envio Automático via WhatsApp</p>
             <p className="text-[11px] text-emerald-300/80 mt-0.5">
-              Ao concluir, você receberá o comprovante digital e será direcionado para o WhatsApp com a mensagem formatada pronta para envio à <strong>Saulo Barbearia</strong>.
+              Ao concluir, você receberá o comprovante digital e será direcionado para o WhatsApp com a mensagem formatada pronta para envio à <strong>{BARBERSHOP_INFO.name}</strong>.
             </p>
           </div>
         </div>

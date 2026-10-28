@@ -181,7 +181,9 @@ export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
         {/* Endereço no rodapé do ticket */}
         <div className="p-4 pt-2 bg-neutral-950/60 text-[11px] text-neutral-400 flex items-start gap-2">
           <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-          <span>{barbershop.address}</span>
+          <span>
+            {barbershop.address} – {barbershop.neighborhood}, {barbershop.city}
+          </span>
         </div>
       </div>
 

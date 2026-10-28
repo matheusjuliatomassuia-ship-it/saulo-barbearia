@@ -61,4 +61,5 @@ export interface BarbershopInfo {
   openingHours: string;
   rating: number;
   reviewCount?: number;
+  logo?: string;
 }

@@ -151,7 +151,23 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col selection:bg-amber-500 selection:text-neutral-950">
+    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col selection:bg-amber-500 selection:text-neutral-950 relative">
+      {/* IMAGEM DE FUNDO DA BARBEARIA */}
+      <div
+        className="fixed inset-0 -z-10 pointer-events-none overflow-hidden select-none"
+        aria-hidden="true"
+      >
+        <img
+          src="/barber_background.jpg"
+          alt="Ambiente Barbearia"
+          className="w-full h-full object-cover object-center scale-105 filter brightness-[0.27] contrast-[1.12] saturate-[0.88]"
+        />
+        {/* Camadas de proteção e gradientes para garantir contraste e legibilidade impecáveis */}
+        <div className="absolute inset-0 bg-neutral-950/70 backdrop-blur-[1.5px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/90 via-neutral-950/60 to-neutral-950/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-neutral-950/80" />
+      </div>
+
       {/* HEADER 100% PARA O CLIENTE */}
       <Header />
 
@@ -242,7 +258,9 @@ export default function App() {
               {BARBERSHOP_INFO.name}
             </span>
             <span>•</span>
-            <span className="truncate max-w-[220px]">{BARBERSHOP_INFO.address}</span>
+            <span className="truncate max-w-[320px]">
+              {BARBERSHOP_INFO.address} – {BARBERSHOP_INFO.neighborhood}, {BARBERSHOP_INFO.city}
+            </span>
           </div>
 
           <div className="flex items-center gap-3 text-[11px]">

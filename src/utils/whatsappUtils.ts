@@ -114,7 +114,9 @@ export function getGoogleCalendarUrl(
       `📋 Código: #${appointment.code}\n` +
       (appointment.notes ? `📝 Obs: ${appointment.notes}\n` : '')
   );
-  const location = encodeURIComponent(`${barbershop.address}, ${barbershop.city}`);
+  const location = encodeURIComponent(
+    `${barbershop.address} - ${barbershop.neighborhood}, ${barbershop.city}`
+  );
 
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${formatCalDate(startDate)}/${formatCalDate(endDate)}&details=${details}&location=${location}&ctz=America/Sao_Paulo`;
 }

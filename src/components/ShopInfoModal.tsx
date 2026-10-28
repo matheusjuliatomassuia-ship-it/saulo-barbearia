@@ -24,8 +24,12 @@ export const ShopInfoModal: React.FC<ShopInfoModalProps> = ({ isOpen, onClose })
 
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-neutral-950 font-bold border border-amber-400/40 shrink-0">
-              <span className="font-cinzel text-lg">SB</span>
+            <div className="relative w-14 h-14 rounded-full p-0.5 bg-gradient-to-br from-amber-400 to-amber-700 shadow-md shadow-amber-500/20 shrink-0 overflow-hidden border border-amber-400/40">
+              <img
+                src={BARBERSHOP_INFO.logo || '/saulo_profile_logo.jpg'}
+                alt={BARBERSHOP_INFO.name}
+                className="w-full h-full object-cover rounded-full bg-neutral-900"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white font-cinzel">
@@ -58,9 +62,11 @@ export const ShopInfoModal: React.FC<ShopInfoModalProps> = ({ isOpen, onClose })
               <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-white">Localização</p>
-                <p className="text-neutral-400 mt-0.5 leading-relaxed">{BARBERSHOP_INFO.address}</p>
+                <p className="text-neutral-400 mt-0.5 leading-relaxed">
+                  {BARBERSHOP_INFO.address} – {BARBERSHOP_INFO.neighborhood}, {BARBERSHOP_INFO.city}
+                </p>
                 <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent(BARBERSHOP_INFO.name + ' ' + BARBERSHOP_INFO.address)}`}
+                  href={`https://maps.google.com/?q=${encodeURIComponent(`${BARBERSHOP_INFO.name}, ${BARBERSHOP_INFO.address}, ${BARBERSHOP_INFO.neighborhood}, ${BARBERSHOP_INFO.city}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-1 text-amber-400 underline font-medium hover:text-amber-300"
