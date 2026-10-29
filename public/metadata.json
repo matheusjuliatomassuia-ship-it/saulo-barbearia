@@ -1,0 +1,6 @@
+{
+  "name": "Saulo Barbearia",
+  "description": "Sistema de agendamento online para a Saulo Barbearia com escolha de serviços, profissionais, calendário de horários livres e confirmação automática via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
