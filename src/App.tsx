@@ -245,7 +245,7 @@ useEffect(() => {
                 selectedBarber={selectedBarber || BARBERS[0]}
                 selectedService={selectedService}
                 barbers={BARBERS}
-                appointments={appointments}
+                appointments={remoteBusy ?? appointments}
                 onSelectDate={(date) => setSelectedDate(date)}
                 onSelectTime={(time) => setSelectedTime(time)}
                 onBack={() => goToStep(2)}
