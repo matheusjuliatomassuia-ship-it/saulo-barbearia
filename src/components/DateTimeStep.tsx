@@ -49,15 +49,15 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
       </div>
 
       {/* SELETOR DE DATA E HORÁRIO */}
-      <CalendarSelector
-        selectedDate={selectedDate}
-        selectedTime={selectedTime}
-        selectedBarberId={selectedBarber.id}
-        barbers={barbers}
-        appointments={remoteBusy ?? appointments}
-        onSelectDate={onSelectDate}
-        onSelectTime={onSelectTime}
-      />
+<CalendarSelector
+  selectedDate={selectedDate}
+  selectedTime={selectedTime}
+  selectedBarberId={selectedBarber.id}
+  barbers={barbers}
+  appointments={appointments}
+  onSelectDate={onSelectDate}
+  onSelectTime={onSelectTime}
+/>
 
       {/* BARRA INFERIOR DE CONTINUAÇÃO DA ETAPA 3 */}
       <div className="sticky bottom-3 z-20 bg-neutral-900/95 backdrop-blur-md border border-neutral-800 p-3.5 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
